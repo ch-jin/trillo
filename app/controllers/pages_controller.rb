@@ -8,10 +8,10 @@ class PagesController < ApplicationController
 
   def home
     today_data = find_and_parse_json(TODAY_URL)
-    @post_url = set_pic(today_data)
-    location_data = set_location
-    set_time_zone(location_data)
-    weather_data = find_weather_data(location_data["zip_code"])[:list]
+    @post = set_pic(today_data)
+    @location_data = set_location
+    set_time_zone(@location_data)
+    weather_data = find_weather_data(@location_data["zip_code"])[:list]
     @weather_display = weather_data[0..3].map do |snippet|
       compile_weather_info(snippet)
     end
@@ -24,18 +24,24 @@ class PagesController < ApplicationController
   end
 
   def any_pic_of_size?(input_json, size)
+    pic_info = {}
     found_post = input_json[:data][:children].detect do |post|
       post[:data][:preview][:images][0][:source][:width] >= size
     end
     if found_post.nil?
       nil
     else
-      found_post[:data][:preview][:images][0][:source][:url]
+      pic_info[:url] = found_post[:data][:preview][:images][0][:source][:url]
+      pic_info[:title] = found_post[:data][:title]
+      pic_info
     end
   end
 
   def default_top_pic(input_json)
-    input_json[:data][:children][0][:data][:preview][:images][0][:source][:url]
+    pic_info = {}
+    pic_info[:url] = input_json[:data][:children][0][:data][:preview][:images][0][:source][:url]
+    pic_info[:title] = input_json[:data][:children][0][:data][:title]
+    pic_info
   end
 
   def set_pic(data)
@@ -79,7 +85,7 @@ class PagesController < ApplicationController
   end
 
   def K_to_F(kelvin)
-    temp = (((9 / 5) * (kelvin.to_f - 273)) + 32).to_i
+    temp = (((9.0 / 5) * (kelvin.to_f - 273)) + 32).round
   end
 
   def default_location

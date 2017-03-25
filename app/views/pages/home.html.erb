@@ -4,44 +4,31 @@
   body {
     width: 100%;
     height: 100%;
-    background: url(<%= @post_url %>) center center no-repeat;
+    background: url(<%= @post[:url] %>) center center no-repeat;
     background-size: cover;
     background-attachment: fixed;
   }
 </style>
 
-
 <div class="bg-img">
   <div class="container">
+
+
     <div class="row">
-      <div class="col-md-3 weather-module">
-        <div><%= @weather_display[0][:date]%></div>
-        <div><%= @weather_display[0][:time] %></div>
-        <div><%= @weather_display[0][:temp] %>&deg;F</div>
-        <div><%= @weather_display[0][:description] %></div>
-        <i class="owf owf-<%= @weather_display[0][:id]%>"></i>
+      <div class="col-md-12 weather-title">
+        <%= @post[:title] %>
       </div>
-      <div class="col-md-3 weather-module">
-        <div><%= @weather_display[1][:date]%></div>
-        <div><%= @weather_display[1][:time] %></div>
-        <div><%= @weather_display[1][:temp] %>&deg;F</div>
-        <div><%= @weather_display[1][:description] %></div>
-        <i class="owf owf-<%= @weather_display[1][:id]%>"></i>
+    </div>
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1 location">
+        <%= "#{@location_data["city"]}, #{@location_data["region_code"]}" %>
       </div>
-      <div class="col-md-3 weather-module">
-        <div><%= @weather_display[2][:date]%></div>
-        <div><%= @weather_display[2][:time] %></div>
-        <div><%= @weather_display[2][:temp] %>&deg;F</div>
-        <div><%= @weather_display[2][:description] %></div>
-        <i class="owf owf-<%= @weather_display[2][:id]%>"></i>
-      </div>
-      <div class="col-md-3 weather-module">
-        <div><%= @weather_display[3][:date]%></div>
-        <div><%= @weather_display[3][:time] %></div>
-        <div><%= @weather_display[3][:temp] %>&deg;F</div>
-        <div><%= @weather_display[3][:description] %></div>
-        <i class="owf owf-<%= @weather_display[3][:id]%>"></i>
-      </div>
+    </div>
+    <div class="row">
+      <% @weather_display.each do |weather_snippet| %>
+        <%= render partial: "weather_module", \
+          locals: { weather_snippet: weather_snippet } %>
+      <% end %>
     </div>
   </div>
 </div>
