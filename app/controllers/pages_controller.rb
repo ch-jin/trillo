@@ -69,7 +69,8 @@ class PagesController < ApplicationController
       time: am_pm(date_time.hour),
       temp: K_to_F(weather_snippet[:main][:temp]),
       weather: weather_snippet[:weather][0][:main],
-      description: weather_snippet[:weather][0][:description]
+      description: weather_snippet[:weather][0][:description],
+      id: weather_snippet[:weather][0][:id]
     }
   end
 
@@ -83,6 +84,10 @@ class PagesController < ApplicationController
 
   def default_location
     MockRequest.new({"HTTP_X_REAL_IP" => "136.0.16.217"}).location.data
+  end
+
+  def weather_icon(id)
+    File.read()
   end
 
   class MockRequest < Rack::Request

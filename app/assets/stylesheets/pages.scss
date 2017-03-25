@@ -1,3 +1,21 @@
-// Place all the styles related to the pages controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.bg-img {
+  padding-top: 2em;
+  .container .row .weather-module {
+    text-align: center;
+    padding: 10px 0;
+    background: rgba(255,255,255,0.7);
+    font-size: 1.5em;
+    border-radius: 2px;
+    border: solid black 2px;
+    margin: -2px -1px;
+
+    div:first-child {
+      font-size: 1.6em;
+    }
+
+    i {
+      margin-top: 10px;
+      font-size: 3em;
+    }
+  }
+}
