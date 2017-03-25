@@ -7,4 +7,33 @@
   }
 </style>
 
-<div class="bg-img"></div>
+<div class="bg-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 weather-module">
+        <div><%= @weather_display[0][:date]%></div>
+        <div><%= @weather_display[0][:time] %></div>
+        <div><%= @weather_display[0][:temp] %>&deg;F</div>
+        <div><%= @weather_display[0][:description] %></div>
+      </div>
+      <div class="col-md-3 weather-module">
+        <div><%= @weather_display[1][:date]%></div>
+        <div><%= @weather_display[1][:time] %></div>
+        <div><%= @weather_display[1][:temp] %>&deg;F</div>
+        <div><%= @weather_display[1][:description] %></div>
+      </div>
+      <div class="col-md-3 weather-module">
+        <div><%= @weather_display[2][:date]%></div>
+        <div><%= @weather_display[2][:time] %></div>
+        <div><%= @weather_display[2][:temp] %>&deg;F</div>
+        <div><%= @weather_display[2][:description] %></div>
+      </div>
+      <div class="col-md-3 weather-module">
+        <div><%= @weather_display[3][:date]%></div>
+        <div><%= @weather_display[3][:time] %></div>
+        <div><%= @weather_display[3][:temp] %>&deg;F</div>
+        <div><%= @weather_display[3][:description] %></div>
+      </div>
+    </div>
+  </div>
+</div>
