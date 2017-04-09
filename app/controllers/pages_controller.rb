@@ -9,7 +9,7 @@ class PagesController < ApplicationController
   def home
     today_data = find_and_parse_json(TODAY_URL)
     @post = set_pic(today_data)
-    @location_data = set_location
+    @location_data = get_location(request.remote_ip)
     set_time_zone(@location_data)
     weather_data = find_weather_data(@location_data["zip_code"])[:list]
     @weather_display = weather_data[0..3].map do |snippet|
@@ -60,14 +60,6 @@ class PagesController < ApplicationController
     Time.zone = location_data["time_zone"]
   end
 
-  def set_location
-    if request.location.data.nil?
-      location_data = request.location.data
-    else
-      location_data = default_location
-    end
-  end
-
   def compile_weather_info(weather_snippet)
     date_time = Time.at(weather_snippet[:dt].to_i)
     return {
@@ -88,8 +80,9 @@ class PagesController < ApplicationController
     temp = (((9.0 / 5) * (kelvin.to_f - 273)) + 32).round
   end
 
-  def default_location
-    MockRequest.new({"HTTP_X_REAL_IP" => "136.0.16.217"}).location.data
+  def get_location(ip)
+    ip = "72.229.28.185" if Rails.env.development?
+    MockRequest.new({"HTTP_X_REAL_IP" => ip}).location.data
   end
 
   def weather_icon(id)
